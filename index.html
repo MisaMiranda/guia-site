@@ -279,6 +279,94 @@
       .flow-item:nth-child(4)::after { display: none; }
       .wrapper { padding: 40px 16px 60px; }
     }
+    /* ── TERMINAL SIMULAÇÃO ── */
+    .terminal-wrap {
+      margin: 20px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #2a2e45;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+    }
+
+    .terminal-label {
+      background: #0c0e1a;
+      padding: 10px 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--git);
+      border-bottom: 1px solid #2a2e45;
+    }
+
+    .terminal-bar {
+      background: #111218;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border-bottom: 1px solid #1a1d2e;
+    }
+
+    .t-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .t-red    { background: #ff5f57; }
+    .t-yellow { background: #febc2e; }
+    .t-green  { background: #28c840; }
+
+    .t-title {
+      margin-left: 6px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      font-family: 'Courier New', monospace;
+    }
+
+    .terminal-body {
+      background: #0c0e1a;
+      padding: 24px 28px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      overflow-x: auto;
+    }
+
+    .t-line {
+      display: block;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .t-path {
+      color: rgba(255,255,255,0.35);
+      user-select: none;
+    }
+
+    .t-cmd {
+      color: #2fffa0;
+      font-weight: 700;
+    }
+
+    .t-output {
+      color: rgba(255,255,255,0.55);
+      padding-left: 2px;
+    }
+
+    .t-spacer { height: 8px; }
+
+    .t-cursor {
+      color: #2fffa0;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
   </style>
 </head>
 <body>
@@ -360,7 +448,47 @@
       <div class="note">Atenção: tem um espaço entre 'commit' e '-m'. Copie a linha do remote add direto do GitHub.</div>
     </div>
 
-    <!-- PASSO 6 -->
+    <!-- SIMULAÇÃO DE TERMINAL -->
+    <div class="terminal-wrap">
+      <div class="terminal-label">Passo 5.1 — Como ficou na prática</div>
+      <div class="terminal-bar">
+        <span class="t-dot t-red"></span>
+        <span class="t-dot t-yellow"></span>
+        <span class="t-dot t-green"></span>
+        <span class="t-title">Prompt de Comando — cmd.exe</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-path">C:\Users\misae&gt;</span><span class="t-cmd">cd "C:\Users\misae\Downloads\site guia ferramentas"</span></div>
+        <div class="t-spacer"></div>
+        <div class="t-line"><span class="t-path">C:\Users\misae\Downloads\site guia ferramentas&gt;</span><span class="t-cmd">git init</span></div>
+        <div class="t-line t-output">Initialized empty Git repository in C:/Users/misae/Downloads/site guia ferramentas/.git/</div>
+        <div class="t-spacer"></div>
+        <div class="t-line"><span class="t-path">C:\Users\misae\Downloads\site guia ferramentas&gt;</span><span class="t-cmd">git add index.html</span></div>
+        <div class="t-line t-output">warning: in the working copy of 'index.html', LF will be replaced by CRLF the next time Git touches it</div>
+        <div class="t-spacer"></div>
+        <div class="t-line"><span class="t-path">C:\Users\misae\Downloads\site guia ferramentas&gt;</span><span class="t-cmd">git commit -m "primeiro commit"</span></div>
+        <div class="t-line t-output">[master (root-commit) 1631cc2] primeiro commit</div>
+        <div class="t-line t-output">&nbsp;1 file changed, 316 insertions(+)</div>
+        <div class="t-line t-output">&nbsp;create mode 100644 index.html</div>
+        <div class="t-spacer"></div>
+        <div class="t-line"><span class="t-path">C:\Users\misae\Downloads\site guia ferramentas&gt;</span><span class="t-cmd">git remote add origin https://github.com/MisaMiranda/site-guia-ferramentas-dev.git</span></div>
+        <div class="t-spacer"></div>
+        <div class="t-line"><span class="t-path">C:\Users\misae\Downloads\site guia ferramentas&gt;</span><span class="t-cmd">git branch -M main</span></div>
+        <div class="t-spacer"></div>
+        <div class="t-line"><span class="t-path">C:\Users\misae\Downloads\site guia ferramentas&gt;</span><span class="t-cmd">git push -u origin main</span></div>
+        <div class="t-line t-output">Enumerating objects: 3, done.</div>
+        <div class="t-line t-output">Counting objects: 100% (3/3), done.</div>
+        <div class="t-line t-output">Delta compression using up to 4 threads</div>
+        <div class="t-line t-output">Compressing objects: 100% (2/2), done.</div>
+        <div class="t-line t-output">Writing objects: 100% (3/3), 4.37 MiB | 2.93 MiB/s, done.</div>
+        <div class="t-line t-output">Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)</div>
+        <div class="t-line t-output">To https://github.com/MisaMiranda/site-guia-ferramentas-dev.git</div>
+        <div class="t-line t-output">&nbsp;* [new branch]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main -&gt; main</div>
+        <div class="t-line t-output">branch 'main' set up to track 'origin/main'.</div>
+        <div class="t-spacer"></div>
+        <div class="t-line"><span class="t-path">C:\Users\misae\Downloads\site guia ferramentas&gt;</span><span class="t-cursor">█</span></div>
+      </div>
+    </div>
     <div class="step">
       <div class="step-label">Passo 6</div>
       <h2>Publicar no Vercel</h2>
