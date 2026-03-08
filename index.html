@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia do Dev Iniciante · Claude + Git + GitHub + Vercel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0f1a;
+      --bg2:      #111422;
+      --border:   #1e2235;
+      --text:     #e2e8f8;
+      --muted:    #a0aac8;
+      --claude:   #cc785c;
+      --git:      #f59e0b;
+      --github:   #4b8ef5;
+      --vercel:   #2fffa0;
+      --cmd-bg:   #0a0c18;
+      --cmd-text: #2fffa0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      height: 4px;
+      background: linear-gradient(to right, var(--claude), var(--git), var(--github), var(--vercel));
+    }
+
+    /* ── WRAPPER ── */
+    .wrapper {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    /* ── HEADER ── */
+    .page-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--github);
+      margin-bottom: 20px;
+    }
+
+    .page-title {
+      font-size: clamp(2.8rem, 7vw, 4.2rem);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .page-subtitle {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 56px;
+      line-height: 1.6;
+    }
+
+    /* ── STEP CARD ── */
+    .step {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--git);
+      border-radius: 6px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+    }
+
+    .step-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--git);
+      margin-bottom: 8px;
+    }
+
+    .step h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #e8eaf6;
+      margin-bottom: 16px;
+    }
+
+    /* ── INSTRUCTIONS ── */
+    .instructions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .inst {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .inst::before {
+      content: "# ";
+      color: #4b5580;
+    }
+
+    /* ── CMD BLOCK ── */
+    .cmd {
+      background: var(--cmd-bg);
+      border: 1px solid #1a1e30;
+      border-radius: 4px;
+      padding: 11px 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      color: var(--cmd-text);
+      margin: 8px 0;
+      word-break: break-all;
+      font-weight: 600;
+    }
+
+    /* ── NOTE ── */
+    .note {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .note::before {
+      content: "■";
+      color: var(--git);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .note.green::before { color: var(--vercel); }
+
+    /* ── FLOW SECTION ── */
+    .flow-section {
+      margin-top: 60px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px 32px;
+    }
+
+    .flow-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--git);
+      margin-bottom: 32px;
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-bottom: 32px;
+    }
+
+    .flow-item {
+      border: 2px solid var(--border);
+      padding: 24px 16px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-item:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 1.2rem;
+      z-index: 1;
+    }
+
+    .flow-item.c1 { border-color: rgba(204,120,92,0.5); background: rgba(204,120,92,0.04); }
+    .flow-item.c2 { border-color: rgba(245,158,11,0.5); background: rgba(245,158,11,0.04); }
+    .flow-item.c3 { border-color: rgba(75,142,245,0.5); background: rgba(75,142,245,0.04); }
+    .flow-item.c4 { border-color: rgba(47,255,160,0.5); background: rgba(47,255,160,0.04); }
+
+    .flow-num {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .c1 .flow-num { color: var(--claude); }
+    .c2 .flow-num { color: var(--git); }
+    .c3 .flow-num { color: var(--github); }
+    .c4 .flow-num { color: var(--vercel); }
+
+    .flow-desc {
+      font-size: 0.88rem;
+      color: #c0c8e0;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .flow-action {
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .c1 .flow-action { background: rgba(204,120,92,0.2); color: var(--claude); border: 1px solid rgba(204,120,92,0.3); }
+    .c2 .flow-action { background: rgba(245,158,11,0.2); color: var(--git);    border: 1px solid rgba(245,158,11,0.3); font-family: 'Courier New', monospace; }
+    .c3 .flow-action { background: rgba(75,142,245,0.2);  color: var(--github); border: 1px solid rgba(75,142,245,0.3); }
+    .c4 .flow-action { background: rgba(47,255,160,0.15); color: var(--vercel); border: 1px solid rgba(47,255,160,0.3); }
+
+    .flow-note {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      font-size: 1rem;
+      line-height: 1.7;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-top: 8px;
+    }
+
+    .flow-note::before {
+      content: "■";
+      color: var(--git);
+      flex-shrink: 0;
+      font-size: 0.8rem;
+      margin-top: 4px;
+    }
+
+    .flow-note strong { color: #e8eaf6; }
+
+    .flow-conclusion {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--github);
+    }
+
+    .flow-conclusion::after {
+      content: " ■";
+      color: var(--vercel);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 60px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .flow-grid { grid-template-columns: repeat(2, 1fr); }
+      .flow-item:nth-child(2)::after,
+      .flow-item:nth-child(4)::after { display: none; }
+      .wrapper { padding: 40px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar"></div>
+
+  <div class="wrapper">
+
+    <div class="page-label">Passo a passo completo</div>
+    <h1 class="page-title">Do zero ao site no ar</h1>
+    <p class="page-subtitle">Aprenda a criar, publicar e atualizar seu site usando Claude, Git, GitHub e Vercel — do zero, sem complicação.</p>
+
+    <!-- PASSO 1 -->
+    <div class="step">
+      <div class="step-label">Passo 1</div>
+      <h2>Preparar o arquivo</h2>
+      <div class="instructions">
+        <p class="inst">Nomeie o arquivo como index.html desde o início</p>
+        <p class="inst">Crie uma pasta para o projeto (ex: meu-site)</p>
+        <p class="inst">Mova o index.html para dentro dessa pasta</p>
+      </div>
+      <div class="note">O nome index.html é o padrão que todo servidor web reconhece automaticamente.</div>
+    </div>
+
+    <!-- PASSO 2 -->
+    <div class="step">
+      <div class="step-label">Passo 2</div>
+      <h2>Instalar o Git no seu PC</h2>
+      <div class="instructions">
+        <p class="inst">Acesse git-scm.com e baixe o instalador para Windows</p>
+        <p class="inst">Clique em Next em todas as telas (pode deixar tudo no padrão)</p>
+        <p class="inst">Para verificar se instalou, abra o terminal e digite:</p>
+      </div>
+      <div class="cmd">git --version</div>
+      <div class="note">Se aparecer 'git version 2.x.x', está instalado e funcionando.</div>
+    </div>
+
+    <!-- PASSO 3 -->
+    <div class="step">
+      <div class="step-label">Passo 3</div>
+      <h2>Criar conta e repositório no GitHub</h2>
+      <div class="instructions">
+        <p class="inst">Acesse github.com e crie uma conta gratuita</p>
+        <p class="inst">Clique em + (canto superior direito) &gt; New repository</p>
+        <p class="inst">Dê um nome ao repositório (ex: meu-site), marque Public</p>
+        <p class="inst">Clique em Create repository</p>
+      </div>
+      <div class="note">O nome de usuário vai aparecer no endereço dos seus projetos — escolha algo simples.</div>
+    </div>
+
+    <!-- PASSO 4 -->
+    <div class="step">
+      <div class="step-label">Passo 4</div>
+      <h2>Abrir o terminal na pasta do projeto</h2>
+      <div class="instructions">
+        <p class="inst">Abra o terminal: Windows + R &gt; digite cmd &gt; Enter</p>
+        <p class="inst">Navegue até a pasta do projeto:</p>
+      </div>
+      <div class="cmd">cd "Desktop\meu-site"</div>
+      <div class="instructions" style="margin-top:4px;">
+        <p class="inst">Ou se estiver em Downloads:</p>
+      </div>
+      <div class="cmd">cd "Downloads\meu-site"</div>
+    </div>
+
+    <!-- PASSO 5 -->
+    <div class="step">
+      <div class="step-label">Passo 5</div>
+      <h2>Iniciar o Git e enviar para o GitHub</h2>
+      <div class="cmd">git init</div>
+      <div class="cmd">git add index.html</div>
+      <div class="cmd">git commit -m "primeiro commit"</div>
+      <div class="instructions" style="margin-top:10px;">
+        <p class="inst">Cole a linha que o GitHub mostra na página do repositório:</p>
+      </div>
+      <div class="cmd">git remote add origin https://github.com/seu-usuario/meu-site.git</div>
+      <div class="cmd">git branch -M main</div>
+      <div class="cmd">git push -u origin main</div>
+      <div class="note">Atenção: tem um espaço entre 'commit' e '-m'. Copie a linha do remote add direto do GitHub.</div>
+    </div>
+
+    <!-- PASSO 6 -->
+    <div class="step">
+      <div class="step-label">Passo 6</div>
+      <h2>Publicar no Vercel</h2>
+      <div class="instructions">
+        <p class="inst">Acesse vercel.com e clique em Sign Up &gt; Continue with GitHub</p>
+        <p class="inst">Na tela inicial clique em Add New &gt; Project</p>
+        <p class="inst">Encontre seu repositório na lista e clique em Import</p>
+        <p class="inst">Deixe todas as opções no padrão e clique em Deploy</p>
+        <p class="inst">Pronto! Seu site estará no ar em segundos</p>
+      </div>
+      <div class="note green">Seu link ficará no formato: https://meu-site.vercel.app — compartilhe com qualquer pessoa!</div>
+    </div>
+
+    <!-- FLUXO COMPLETO -->
+    <div class="flow-section">
+      <div class="flow-label">O Fluxo Completo</div>
+
+      <div class="flow-grid">
+        <div class="flow-item c1">
+          <div class="flow-num">1 Claude</div>
+          <div class="flow-desc">Cria os arquivos</div>
+          <div class="flow-action">Baixa o arquivo</div>
+        </div>
+        <div class="flow-item c2">
+          <div class="flow-num">2 Git</div>
+          <div class="flow-desc">Empacota e envia</div>
+          <div class="flow-action">git push</div>
+        </div>
+        <div class="flow-item c3">
+          <div class="flow-num">3 GitHub</div>
+          <div class="flow-desc">Guarda na nuvem</div>
+          <div class="flow-action">Conecta ao Vercel</div>
+        </div>
+        <div class="flow-item c4">
+          <div class="flow-num">4 Vercel</div>
+          <div class="flow-desc">Publica na internet</div>
+          <div class="flow-action">Site no ar ■</div>
+        </div>
+      </div>
+
+      <div class="flow-note">
+        <strong>Git fica instalado no seu computador.</strong> Claude, GitHub e Vercel ficam na nuvem. O Git é a única peça que vive na sua máquina — e é ele que faz a ponte entre o que você criou localmente e o que o mundo vê online.
+      </div>
+
+      <div class="flow-conclusion">Com prática, esse fluxo vira segunda natureza.</div>
+    </div>
+
+  </div>
+
+  <footer>
+    Guia do Dev Iniciante &nbsp;·&nbsp; Claude + Git + GitHub + Vercel
+  </footer>
+
+</body>
+</html>
